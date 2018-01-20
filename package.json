@@ -1,0 +1,21 @@
+{
+  "name": "cra-hyperapp",
+  "version": "0.0.1",
+  "description": "Hyperapp expansion pack for create-react-app",
+  "bin": {
+    "hyperapp-scripts": "./bin/index.js"
+  },
+  "scripts": {
+    "format": "npx prettier --write **/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/okwolf/cra-hyperapp.git"
+  },
+  "author": "Wolfgang Wedemeyer <wolf@okwolf.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/okwolf/cra-hyperapp/issues"
+  },
+  "homepage": "https://github.com/okwolf/cra-hyperapp"
+}
