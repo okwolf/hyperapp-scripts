@@ -38,6 +38,11 @@ if (!babelLoaders.length) {
     `missing Babel config in webpack config: ${webpackConfigPath}`
   );
 }
+// include our own compatibility helper functions in the babel transpilation
+babelLoaders[0].include = [].concat(
+  babelLoaders[0].include,
+  require.resolve("cra-hyperapp")
+);
 const babelOptions = babelLoaders[0].options;
 
 // override ESLint rules to allow using JSX with Hyperapp
