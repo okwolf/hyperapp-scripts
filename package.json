@@ -1,12 +1,17 @@
 {
   "name": "cra-hyperapp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hyperapp expansion pack for create-react-app",
+  "main": "src/index.js",
   "bin": {
     "hyperapp-scripts": "./bin/index.js"
   },
   "scripts": {
     "format": "npx prettier --write **/*.js"
+  },
+  "peerDependencies": {
+    "react-scripts": "^1.1.0",
+    "hyperapp": "^1.0.2"
   },
   "repository": {
     "type": "git",
