@@ -1,6 +1,6 @@
 {
   "name": "cra-hyperapp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Hyperapp expansion pack for create-react-app",
   "main": "src/index.js",
   "bin": {

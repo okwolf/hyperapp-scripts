@@ -6,7 +6,7 @@ export const h = (type, props, ...children) =>
     type,
     typeof type === "function" && type.length === 1
       ? { ...props, children }
-      : Object.keys(props).reduce(
+      : Object.keys(props || {}).reduce(
           (otherProps, name) => ({
             ...otherProps,
             [propRename(name)]: props[name]
@@ -53,7 +53,7 @@ export const connect = (mapStateToProps, mapDispatchToProps) => Component => (
     {
       ...props,
       ...mapStateToProps(secretInternals.store.getState(), props),
-      ...Object.keys(mapDispatchToProps).reduce(
+      ...Object.keys(mapDispatchToProps || {}).reduce(
         (otherActions, name) => ({
           ...otherActions,
           [name]: data =>
