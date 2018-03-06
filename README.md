@@ -15,7 +15,7 @@ Install your dependencies (they're good for your health).
 
 ```console
 npm i hyperapp
-npm i -D react-scripts cra-hyperapp
+npm i -D cra-hyperapp
 ```
 
 Then open your `package.json` in your favorite text editor and add your scripts.
