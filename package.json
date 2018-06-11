@@ -1,6 +1,6 @@
 {
   "name": "cra-hyperapp",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Hyperapp expansion pack for create-react-app",
   "main": "src/index.js",
   "bin": {
@@ -9,13 +9,13 @@
   "scripts": {
     "format": "npx prettier --write **/*.js",
     "format:check": "npx prettier --list-different **/*.js",
-    "release": "npm run format:check && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+    "release": "./pre-flight-tests && npm run format:check && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "dependencies": {
-    "react-scripts": "=1.1.0"
+    "react-scripts": "=1.1.4"
   },
   "peerDependencies": {
-    "hyperapp": "^1.1.2"
+    "hyperapp": "^1.2.6"
   },
   "repository": {
     "type": "git",
