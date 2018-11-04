@@ -1,0 +1,10 @@
+{
+  "name": "hyperapp-cra-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "format": "npx prettier --write src/**/*.{css,js}",
+    "start": "../bin/index.js start",
+    "build": "../bin/index.js build"
+  }
+}
