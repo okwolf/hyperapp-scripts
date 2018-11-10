@@ -6,11 +6,18 @@ const App = () => (
   <div className="App">
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
-      <h1 className="App-title">Welcome to Hyperapp</h1>
+      <p>
+        Edit <code>src/App.js</code> and save to reload.
+      </p>
+      <a
+        className="App-link"
+        href="https://hyperapp.js.org"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Learn Hyperapp
+      </a>
     </header>
-    <p className="App-intro">
-      To get started, edit <code>src/App.js</code> and save to reload.
-    </p>
   </div>
 );
 

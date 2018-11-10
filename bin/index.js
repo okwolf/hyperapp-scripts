@@ -31,15 +31,6 @@ if (!eslintLoaders.length) {
   );
 }
 const eslintConfig = eslintLoaders[0].options.baseConfig;
-
-const babelLoaders = getLoadersFromRules(rules, "oneOf", "babel");
-if (!babelLoaders.length) {
-  throw new Error(
-    `missing Babel config in webpack config: ${webpackConfigPath}`
-  );
-}
-const babelOptions = babelLoaders[0].options;
-
 // override ESLint rules to allow using JSX with Hyperapp
 eslintConfig.rules = Object.assign(eslintConfig.rules || {}, {
   "react/react-in-jsx-scope": "off",
@@ -51,9 +42,22 @@ eslintConfig.rules = Object.assign(eslintConfig.rules || {}, {
   ]
 });
 
+const babelLoaders = getLoadersFromRules(rules, "oneOf", "babel");
+if (!babelLoaders.length) {
+  throw new Error(
+    `missing Babel config in webpack config: ${webpackConfigPath}`
+  );
+}
+const babelOptions = babelLoaders[0].options;
 // configure babel to allow using JSX with Hyperapp
 babelOptions.plugins = (babelOptions.plugins || []).concat([
-  ["transform-react-jsx", { pragma: "h", useBuiltIns: true }]
+  [
+    "@babel/transform-react-jsx",
+    {
+      pragma: "h",
+      useBuiltIns: true
+    }
+  ]
 ]);
 
 // override config in cache

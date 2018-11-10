@@ -1,0 +1,11 @@
+{
+  "short_name": "Hyperapp",
+  "name": "CRA-Hyperapp Sample",
+  "icons": {
+    "256": "favicon.png"
+  },
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

@@ -7,13 +7,15 @@
     "hyperapp-scripts": "./bin/index.js"
   },
   "scripts": {
+    "clean": "npx rimraf node_modules example/{node_modules,build}",
+    "postinstall": "cd example && npm i",
     "format": "npx prettier --write **/*.js",
     "format:check": "npx prettier --list-different **/*.js",
     "start": "cd example && npm start",
     "release": "./pre-flight-tests && npm run format:check && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "dependencies": {
-    "react-scripts": "=1.1.5"
+    "react-scripts": "=2.1.1"
   },
   "devDependencies": {
     "hyperapp": "=1.2.9"

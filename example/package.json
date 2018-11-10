@@ -1,10 +1,20 @@
 {
   "name": "hyperapp-cra-example",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "format": "npx prettier --write src/**/*.{css,js}",
-    "start": "../bin/index.js start",
-    "build": "../bin/index.js build"
-  }
+    "start": "hyperapp-scripts start",
+    "build": "hyperapp-scripts build",
+    "test": "hyperapp-scripts test"
+  },
+  "dependencies": {
+    "cra-hyperapp": "file:../"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
