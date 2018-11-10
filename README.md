@@ -23,7 +23,8 @@ Then open your `package.json` in your favorite text editor and add your scripts.
 ```diff
 "scripts": {
 +  "start": "hyperapp-scripts",
-+  "build": "hyperapp-scripts build"
++  "build": "hyperapp-scripts build",
++  "test": "hyperapp-scripts test"
 },
 ```
 
