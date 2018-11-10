@@ -1,5 +1,5 @@
 {
-  "name": "hyperapp-cra-example",
+  "name": "hyperapp-scripts-example",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "test": "hyperapp-scripts test"
   },
   "dependencies": {
-    "cra-hyperapp": "file:../"
+    "hyperapp-scripts": "file:../"
   },
   "browserslist": [
     ">0.2%",
