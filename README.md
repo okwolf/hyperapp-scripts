@@ -1,6 +1,10 @@
 # Zero-configuration [create-react-app](https://github.com/facebook/create-react-app) style projects with  [Hyperapp](https://github.com/hyperapp/hyperapp)
 
-## Starting a new project
+This package offers a wrapper around the `start`, `build`, and `test` scripts from [`react-scripts`](https://github.com/facebook/create-react-app/tree/master/packages/react-scripts) with customizations to make them work with Hyperapp.
+
+Note: if you want to quickly get started with Hyperapp, you probably want [`create-hyperapp`](https://github.com/okwolf/create-hyperapp) instead.
+
+## Starting a new project from scratch
 
 Start by creating a new folder for your awesome new Hyperapp project and initialize a new project with [npm](https://nodejs.org/en/download).
 
