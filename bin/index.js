@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const Module = require("module");
+
 const get = prop => value => value[prop];
 const flatten = (others, next) => others.concat(next);
 const getLoadersFromRules = (rules, path, loaderName) =>
@@ -13,12 +15,11 @@ const getLoadersFromRules = (rules, path, loaderName) =>
 const script = process.argv[2] || "start";
 process.env.NODE_ENV = script === "build" ? "production" : "development";
 
-const webpackConfigPath = `react-scripts/config/webpack.config.${
-  script === "build" ? "prod" : "dev"
-}`;
+const webpackConfigPath = "react-scripts/config/webpack.config";
+const createJestConfigPath = "react-scripts/scripts/utils/createJestConfig";
 
 // load original configs
-const webpackConfig = require(webpackConfigPath);
+const webpackConfig = require(webpackConfigPath)(process.env.NODE_ENV);
 if (!webpackConfig) {
   throw new Error(`no Webpack config found for: ${webpackConfigPath}`);
 }
@@ -61,7 +62,27 @@ babelOptions.plugins = (babelOptions.plugins || []).concat([
 ]);
 
 // override config in cache
-require.cache[require.resolve(webpackConfigPath)].exports = webpackConfig;
+require.cache[require.resolve(webpackConfigPath)].exports = () => webpackConfig;
+
+const createJestConfig = require(createJestConfigPath);
+require.cache[require.resolve(createJestConfigPath)].exports = (...args) => {
+  const jestConfig = createJestConfig(...args);
+  for (let key in jestConfig.transform) {
+    if (jestConfig.transform[key].includes("fileTransform")) {
+      jestConfig.transform[key] = require.resolve("./dummyTransform");
+    }
+  }
+  return jestConfig;
+};
+
+// Mock React module with dummy latest version
+require.cache[require.resolve("resolve")].exports.sync = require.resolve;
+const _resolveFilename = Module._resolveFilename;
+Module._resolveFilename = (request, parent) =>
+  request === "react" ? "react" : _resolveFilename(request, parent);
+require.cache["react"] = {
+  exports: { version: "999.999.999" }
+};
 
 // call original react script
 require(`react-scripts/scripts/${script}.js`);

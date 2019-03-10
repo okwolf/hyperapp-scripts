@@ -1,6 +1,6 @@
 {
   "name": "hyperapp-scripts",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Hyperapp expansion pack for create-react-app",
   "bin": {
     "hyperapp-scripts": "./bin/index.js"
@@ -13,7 +13,7 @@
     "release": "./pre-flight-tests && npm run format:check && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "dependencies": {
-    "react-scripts": "=2.1.1"
+    "react-scripts": "=2.1.8"
   },
   "devDependencies": {
     "hyperapp": "=1.2.9"
