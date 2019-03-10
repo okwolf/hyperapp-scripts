@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "format": "npx prettier --write src/**/*.{css,js}",
     "start": "hyperapp-scripts start",
     "build": "hyperapp-scripts build",
     "test": "hyperapp-scripts test"
