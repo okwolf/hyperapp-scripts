@@ -1,6 +1,6 @@
 {
   "name": "hyperapp-scripts",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Hyperapp expansion pack for create-react-app",
   "bin": {
     "hyperapp-scripts": "./bin/index.js"
@@ -9,8 +9,11 @@
     "clean": "npx rimraf node_modules example/{node_modules,build}",
     "format": "npx prettier --write bin/*.js example/src/**/*.{css,js}",
     "format:check": "npx prettier --list-different bin/*.js example/src/**/*.{css,js}",
-    "start": "npm i && cd example && npm i && npm start",
-    "release": "./pre-flight-tests && npm run format:check && git tag $npm_package_version && git push && git push --tags && npm publish"
+    "setup": "npm i && cd example && npm i",
+    "start": "npm run setup && cd example && npm start",
+    "test": "npm run clean && npm run setup && cd example && npm run build && CI=1 npm test",
+    "check": "npm run format:check && npm test",
+    "release": "./pre-flight-tests && npm run check && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "dependencies": {
     "react-scripts": "=3.0.0"
