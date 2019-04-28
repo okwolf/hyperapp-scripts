@@ -13,7 +13,7 @@
     "release": "./pre-flight-tests && npm run format:check && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "dependencies": {
-    "react-scripts": "=2.1.8"
+    "react-scripts": "=3.0.0"
   },
   "devDependencies": {
     "hyperapp": "=1.2.9"
