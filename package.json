@@ -11,18 +11,23 @@
     "format:check": "npx prettier --list-different bin/*.js example/src/**/*.{css,js}",
     "setup": "npm i && cd example && npm i",
     "start": "npm run setup && cd example && npm start",
-    "test": "npm run clean && npm run setup && cd example && npm run build && CI=1 npm test",
+    "test": "npm run clean && npm run setup && cd example && npm run build && cross-env CI=1 npm test",
     "check": "npm run format:check && npm test",
-    "release": "./pre-flight-tests && npm run check && git tag $npm_package_version && git push && git push --tags && npm publish"
+    "release": "node pre-flight-tests && npm run check && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "dependencies": {
     "react-scripts": "=3.0.0"
   },
   "devDependencies": {
+    "cross-env": "=7.0.2",
     "hyperapp": "=1.2.9"
   },
   "peerDependencies": {
     "hyperapp": "*"
+  },
+  "prettier": {
+    "trailingComma": "none",
+    "arrowParens": "avoid"
   },
   "repository": {
     "type": "git",
