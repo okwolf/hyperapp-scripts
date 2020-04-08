@@ -1,4 +1,4 @@
-# Zero-configuration [create-react-app](https://github.com/facebook/create-react-app) style projects with  [Hyperapp](https://github.com/hyperapp/hyperapp)
+# Zero-configuration [create-react-app](https://github.com/facebook/create-react-app) style projects with [Hyperapp](https://github.com/hyperapp/hyperapp)
 
 This package offers a wrapper around the `start`, `build`, and `test` scripts from [`react-scripts`](https://github.com/facebook/create-react-app/tree/master/packages/react-scripts) with customizations to make them work with Hyperapp.
 
@@ -35,25 +35,30 @@ Then open your `package.json` in your favorite text editor and add your scripts.
 Create a `public/index.html` file.
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>My awesome app!</title>
   </head>
-  <body></body>
+  <body>
+    <div id="app"></div>
+  </body>
 </html>
 ```
 
 Next create a `src/index.js` file with a basic hello world app.
 
 ```jsx
-import { h, app } from "hyperapp"
+import { h, app } from "hyperapp";
 
-const state = { title: "Hi." }
-const actions = {}
-const view = state => <h1>{state.title}</h1>
+const state = { title: "Hi." };
+const view = state => <h1>{state.title}</h1>;
 
-app(state, actions, view, document.body)
+app({
+  init: () => state,
+  view,
+  node: document.getElementById("app")
+});
 ```
 
 Finally start your app and gaze upon its glory.
