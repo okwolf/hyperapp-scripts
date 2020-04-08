@@ -72,6 +72,7 @@ require.cache[require.resolve(createJestConfigPath)].exports = (...args) => {
       jestConfig.transform[key] = require.resolve("./dummyTransform");
     }
   }
+  jestConfig.transformIgnorePatterns = ["node_modules/(?!hyperapp)/"];
   return jestConfig;
 };
 

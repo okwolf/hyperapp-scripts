@@ -1,9 +1,13 @@
 {
   "short_name": "Hyperapp",
-  "name": "Hyperapp Scripts Sample",
-  "icons": {
-    "256": "favicon.png"
-  },
+  "name": "Create Hyperapp Sample",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

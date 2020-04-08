@@ -11,7 +11,7 @@ const App = () => (
       </p>
       <a
         className="App-link"
-        href="https://hyperapp.js.org"
+        href="https://hyperapp.dev"
         target="_blank"
         rel="noopener noreferrer"
       >
