@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-const Module = require("module");
-
 const get = prop => value => value[prop];
 const flatten = (others, next) => others.concat(next);
 const getLoadersFromRules = (rules, path, loaderName) =>
@@ -25,6 +23,9 @@ if (!webpackConfig) {
 }
 const { module: { rules = [] } = {} } = webpackConfig;
 
+// use for unminified prod builds
+// webpackConfig.optimization.minimize = false;
+
 const eslintLoaders = getLoadersFromRules(rules, "use", "eslint");
 if (!eslintLoaders.length) {
   throw new Error(
@@ -32,15 +33,10 @@ if (!eslintLoaders.length) {
   );
 }
 const eslintConfig = eslintLoaders[0].options.baseConfig;
+eslintConfig.settings = { react: { version: "latest" } };
 // override ESLint rules to allow using JSX with Hyperapp
 eslintConfig.rules = Object.assign(eslintConfig.rules || {}, {
-  "react/react-in-jsx-scope": "off",
-  "no-unused-vars": [
-    "warn",
-    {
-      varsIgnorePattern: "^h$"
-    }
-  ]
+  "react/react-in-jsx-scope": "off"
 });
 
 const babelLoaders = getLoadersFromRules(rules, "oneOf", "babel");
@@ -55,10 +51,11 @@ babelOptions.plugins = (babelOptions.plugins || []).concat([
   [
     "@babel/transform-react-jsx",
     {
-      pragma: "h",
+      pragma: "__hyperapp_html",
       useBuiltIns: true
     }
-  ]
+  ],
+  require.resolve("./injectHtmlImportPlugin")
 ]);
 
 // override config in cache
@@ -74,15 +71,6 @@ require.cache[require.resolve(createJestConfigPath)].exports = (...args) => {
   }
   jestConfig.transformIgnorePatterns = ["node_modules/(?!hyperapp)/"];
   return jestConfig;
-};
-
-// Mock React module with dummy latest version
-require.cache[require.resolve("resolve")].exports.sync = require.resolve;
-const _resolveFilename = Module._resolveFilename;
-Module._resolveFilename = (request, parent) =>
-  request === "react" ? "react" : _resolveFilename(request, parent);
-require.cache["react"] = {
-  exports: { version: "999.999.999" }
 };
 
 // call original react script
