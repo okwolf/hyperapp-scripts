@@ -16,11 +16,13 @@
     "release": "node pre-flight-tests && npm run check && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "dependencies": {
+    "babel-plugin-hyperlit": "=0.1.5",
+    "hyperlit": "=0.3.6",
     "react-scripts": "=3.0.0"
   },
   "devDependencies": {
     "cross-env": "=7.0.2",
-    "hyperapp": "=2.0.4"
+    "hyperapp": "=2.0.8"
   },
   "peerDependencies": {
     "hyperapp": "*"

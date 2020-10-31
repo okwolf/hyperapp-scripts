@@ -1,24 +1,20 @@
-import { h } from "hyperapp";
+import html from 'hyperlit'
 import logo from "./logo.svg";
 import "./App.css";
 
-const App = () => (
+const App = () =>
+  html`
   <div className="App">
     <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
+      <img src=${logo} className="App-logo" alt="logo" />
       <p>
         Edit <code>src/App.js</code> and save to reload.
       </p>
-      <a
-        className="App-link"
-        href="https://hyperapp.dev"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a className="App-link" href="https://hyperapp.dev" target="_blank" rel="noopener noreferrer">
         Learn Hyperapp
       </a>
     </header>
   </div>
-);
+`
 
 export default App;

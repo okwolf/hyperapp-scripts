@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-const Module = require("module");
-
 const get = prop => value => value[prop];
 const flatten = (others, next) => others.concat(next);
 const getLoadersFromRules = (rules, path, loaderName) =>
@@ -25,24 +23,6 @@ if (!webpackConfig) {
 }
 const { module: { rules = [] } = {} } = webpackConfig;
 
-const eslintLoaders = getLoadersFromRules(rules, "use", "eslint");
-if (!eslintLoaders.length) {
-  throw new Error(
-    `missing ESLint config in webpack config: ${webpackConfigPath}`
-  );
-}
-const eslintConfig = eslintLoaders[0].options.baseConfig;
-// override ESLint rules to allow using JSX with Hyperapp
-eslintConfig.rules = Object.assign(eslintConfig.rules || {}, {
-  "react/react-in-jsx-scope": "off",
-  "no-unused-vars": [
-    "warn",
-    {
-      varsIgnorePattern: "^h$"
-    }
-  ]
-});
-
 const babelLoaders = getLoadersFromRules(rules, "oneOf", "babel");
 if (!babelLoaders.length) {
   throw new Error(
@@ -50,16 +30,8 @@ if (!babelLoaders.length) {
   );
 }
 const babelOptions = babelLoaders[0].options;
-// configure babel to allow using JSX with Hyperapp
-babelOptions.plugins = (babelOptions.plugins || []).concat([
-  [
-    "@babel/transform-react-jsx",
-    {
-      pragma: "h",
-      useBuiltIns: true
-    }
-  ]
-]);
+// configure babel to transpile hyperlit
+babelOptions.plugins = (babelOptions.plugins || []).concat("hyperlit");
 
 // override config in cache
 require.cache[require.resolve(webpackConfigPath)].exports = () => webpackConfig;
@@ -74,15 +46,6 @@ require.cache[require.resolve(createJestConfigPath)].exports = (...args) => {
   }
   jestConfig.transformIgnorePatterns = ["node_modules/(?!hyperapp)/"];
   return jestConfig;
-};
-
-// Mock React module with dummy latest version
-require.cache[require.resolve("resolve")].exports.sync = require.resolve;
-const _resolveFilename = Module._resolveFilename;
-Module._resolveFilename = (request, parent) =>
-  request === "react" ? "react" : _resolveFilename(request, parent);
-require.cache["react"] = {
-  exports: { version: "999.999.999" }
 };
 
 // call original react script
