@@ -9,6 +9,13 @@ const getLoadersFromRules = (rules, path, loaderName) =>
     .reduce(flatten, [])
     .filter(get("loader"))
     .filter(({ loader }) => loader.includes(loaderName));
+const getRulesByTest = (rules, path, testPart) =>
+  rules
+    .filter(get(path))
+    .map(get(path))
+    .reduce(flatten, [])
+    .filter(get("test"))
+    .filter(({ test }) => test.toString().includes(testPart));
 
 const script = process.argv[2] || "start";
 process.env.NODE_ENV = script === "build" ? "production" : "development";
@@ -21,23 +28,23 @@ const webpackConfig = require(webpackConfigPath)(process.env.NODE_ENV);
 if (!webpackConfig) {
   throw new Error(`no Webpack config found for: ${webpackConfigPath}`);
 }
+
+webpackConfig.plugins = (webpackConfig.plugins || []).filter(
+  plugin => !(plugin?.constructor?.name || "").toLowerCase().includes("react")
+);
 const { module: { rules = [] } = {} } = webpackConfig;
 
 // use for unminified prod builds
 // webpackConfig.optimization.minimize = false;
 
-const eslintLoaders = getLoadersFromRules(rules, "use", "eslint");
-if (!eslintLoaders.length) {
-  throw new Error(
-    `missing ESLint config in webpack config: ${webpackConfigPath}`
-  );
+const svgRules = getRulesByTest(rules, "oneOf", ".svg");
+if (!svgRules.length) {
+  throw new Error(`missing SVG rules in webpack config: ${webpackConfigPath}`);
 }
-const eslintConfig = eslintLoaders[0].options.baseConfig;
-eslintConfig.settings = { react: { version: "latest" } };
-// override ESLint rules to allow using JSX with Hyperapp
-eslintConfig.rules = Object.assign(eslintConfig.rules || {}, {
-  "react/react-in-jsx-scope": "off"
-});
+// this rule brings in a copy of react
+svgRules[0].use = svgRules[0].use.filter(
+  ruleUse => !ruleUse.loader.includes("@svgr")
+);
 
 const babelLoaders = getLoadersFromRules(rules, "oneOf", "babel");
 if (!babelLoaders.length) {
@@ -46,8 +53,12 @@ if (!babelLoaders.length) {
   );
 }
 const babelOptions = babelLoaders[0].options;
+
+// disable babel caching for testing
+// babelOptions.cacheDirectory = false;
+
 // configure babel to allow using JSX with Hyperapp
-babelOptions.plugins = (babelOptions.plugins || []).concat([
+babelOptions.plugins = [
   [
     "@babel/transform-react-jsx",
     {
@@ -56,7 +67,7 @@ babelOptions.plugins = (babelOptions.plugins || []).concat([
     }
   ],
   require.resolve("./injectHtmlImportPlugin")
-]);
+];
 
 // override config in cache
 require.cache[require.resolve(webpackConfigPath)].exports = () => webpackConfig;
@@ -64,12 +75,10 @@ require.cache[require.resolve(webpackConfigPath)].exports = () => webpackConfig;
 const createJestConfig = require(createJestConfigPath);
 require.cache[require.resolve(createJestConfigPath)].exports = (...args) => {
   const jestConfig = createJestConfig(...args);
-  for (let key in jestConfig.transform) {
-    if (jestConfig.transform[key].includes("fileTransform")) {
-      jestConfig.transform[key] = require.resolve("./dummyTransform");
-    }
-  }
-  jestConfig.transformIgnorePatterns = ["node_modules/(?!hyperapp)/"];
+  jestConfig.transformIgnorePatterns = jestConfig.transformIgnorePatterns.map(
+    pattern =>
+      pattern.includes("node_modules") ? "/node_modules/(?!hyperapp)/" : pattern
+  );
   return jestConfig;
 };
 

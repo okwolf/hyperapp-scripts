@@ -12,6 +12,26 @@
       "cwd": "${workspaceFolder}/example",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Build example",
+      "program": "${workspaceFolder}/bin/index.js",
+      "args": ["build", "--stats"],
+      "cwd": "${workspaceFolder}/example",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test example",
+      "program": "${workspaceFolder}/bin/index.js",
+      "args": ["test"],
+      "cwd": "${workspaceFolder}/example",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }
