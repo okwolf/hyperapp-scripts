@@ -5,7 +5,9 @@
   "bin": {
     "hyperapp-scripts": "./bin/index.js"
   },
-  "main": "index.js",
+  "exports": {
+    "./jsx-runtime": "./jsx-runtime.js"
+  },
   "scripts": {
     "clean": "npx --quiet rimraf node_modules example/{node_modules,build}",
     "format": "npx prettier --write *.js bin/*.js example/src/**/*.{css,js}",

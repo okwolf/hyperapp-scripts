@@ -62,11 +62,11 @@ babelOptions.plugins = [
   [
     "@babel/transform-react-jsx",
     {
-      pragma: "__hyperapp_html",
+      runtime: "automatic",
+      importSource: "hyperapp-scripts",
       useBuiltIns: true
     }
-  ],
-  require.resolve("./injectHtmlImportPlugin")
+  ]
 ];
 
 // override config in cache
