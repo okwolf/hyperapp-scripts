@@ -5,7 +5,8 @@
   "scripts": {
     "start": "hyperapp-scripts start",
     "build": "hyperapp-scripts build",
-    "test": "hyperapp-scripts test"
+    "test": "hyperapp-scripts test",
+    "eject": "hyperapp-scripts eject"
   },
   "dependencies": {
     "hyperapp-scripts": "file:../"

@@ -18,6 +18,9 @@ const getRulesByTest = (rules, path, testPart) =>
     .filter(({ test }) => test.toString().includes(testPart));
 
 const script = process.argv[2] || "start";
+if (script === "eject") {
+  throw new Error("eject not supported");
+}
 process.env.NODE_ENV = script === "build" ? "production" : "development";
 
 const webpackConfigPath = "react-scripts/config/webpack.config";
