@@ -1,7 +1,8 @@
 import logo from "./logo.svg";
+import * as counter from "./counter";
 import "./App.css";
 
-const App = () => (
+const App = state => (
   <div className="App">
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
@@ -16,6 +17,7 @@ const App = () => (
       >
         Learn Hyperapp
       </a>
+      <counter.view {...state} />
     </header>
   </div>
 );

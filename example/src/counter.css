@@ -1,0 +1,27 @@
+.counter h1 {
+  margin-top: 2vw;
+  margin-bottom: 0;
+  font-size: 6vw;
+}
+
+.counter button {
+  cursor: pointer;
+  padding: 0.5vw 2.5vw;
+  font-size: 3vw;
+  border: 0.15vw solid #61dafb;
+  color: #61dafb;
+  background: transparent;
+}
+.counter button:hover,
+.counter button:active {
+  background: #61dafb;
+  color: #282c34;
+}
+.counter button:enabled:active {
+  outline: 0.3vw solid #61dafb;
+}
+.counter button:disabled {
+  cursor: not-allowed;
+  background: lightgray;
+  color: #282c34;
+}
