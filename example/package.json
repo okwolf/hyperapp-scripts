@@ -9,6 +9,7 @@
     "eject": "hyperapp-scripts eject"
   },
   "dependencies": {
+    "hyperapp": "=2.0.22",
     "hyperapp-scripts": "file:../"
   },
   "browserslist": {

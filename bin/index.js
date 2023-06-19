@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const nodePath = require("path");
 const get = prop => value => value[prop];
 const flatten = (others, next) => others.concat(next);
 const getLoadersFromRules = (rules, path, loaderName) =>
@@ -71,6 +72,19 @@ babelOptions.plugins = [
     }
   ]
 ];
+
+if (script === "start") {
+  // transpile hyperapp so we can patch it for HMR
+  babelLoaders[0].include = [
+    babelLoaders[0].include,
+    nodePath.join(
+      nodePath.parse(babelLoaders[0].include).dir,
+      "node_modules",
+      "hyperapp"
+    )
+  ];
+  babelOptions.plugins.push(require.resolve("./hyperappHMR"));
+}
 
 // override config in cache
 require.cache[require.resolve(webpackConfigPath)].exports = () => webpackConfig;
